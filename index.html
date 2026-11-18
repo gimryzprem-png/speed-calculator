@@ -1,83 +1,274 @@
+
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Speed Calculator</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Steal an Egg - Speed Calculator</title>
 <style>
-body {
-  font-family: Arial, sans-serif;
-  background: #101827;
-  color: white;
-  text-align: center;
-  padding: 25px;
+*{box-sizing:border-box}
+body{
+ margin:0;background:#101114;color:white;
+ font-family:Arial,sans-serif;
 }
-.container {
-  max-width: 400px;
-  margin: 50px auto;
-  background: #1e293b;
-  padding: 25px;
-  border-radius: 20px;
+header{
+ background:#211713;padding:18px;
+ display:flex;justify-content:space-between;
+ align-items:center;border-bottom:2px solid #444;
 }
-input {
-  width: 90%;
-  padding: 14px;
-  margin: 10px 0;
-  border: 0;
-  border-radius: 10px;
-  font-size: 17px;
+.logo{font-size:35px;font-weight:bold;color:#ff8b25}
+main{max-width:650px;margin:auto;padding:14px}
+.hero{
+ padding:30px 20px;background:linear-gradient(135deg,#48204e,#171923);
+ border:1px solid #333;border-radius:8px;
 }
-button {
-  width: 100%;
-  padding: 15px;
-  background: #22c55e;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  font-size: 18px;
-  margin-top: 15px;
+.hero small{color:#ff974d;letter-spacing:3px;font-weight:bold}
+h1{font-size:34px;margin:15px 0}
+.tabs{display:flex;gap:10px;margin:15px 0 25px}
+.tab{background:#24262d;padding:15px;border:2px solid #555;
+ border-radius:6px;white-space:nowrap}
+.tab.active{background:#ff923f;color:#171717;border-color:#ffb16c}
+.panel{
+ background-color:#17191d;
+ background-image:linear-gradient(45deg,#24262a 12%,transparent 12%,transparent 88%,#24262a 88%);
+ background-size:32px 32px;
+ border:3px solid #292b30;
+ padding:25px 16px;border-radius:8px;
 }
-#result {
-  font-size: 28px;
-  color: #22c55e;
-  margin-top: 25px;
+h3{
+ color:#ffb17c;letter-spacing:3px;
+ font-size:17px;margin:18px 0;
+}
+input{
+ width:100%;padding:20px;border:0;border-radius:7px;
+ background:#090a0c;color:white;font-size:25px;
+ outline:1px solid #292929;
+}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.choice{
+ min-height:105px;background:#20232b;
+ border:3px solid #555963;border-radius:4px;
+ color:white;font-size:17px;font-weight:bold;
+ padding:10px 3px;cursor:pointer;
+ box-shadow:inset 3px 3px #777;
+}
+.choice .emoji{font-size:35px;display:block;margin-bottom:7px}
+.choice.selected{
+ border:3px solid #ff8c32;
+ background:#493020;
+ box-shadow:inset 0 0 15px #7a411e;
+}
+.trail-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.trail-grid .choice{min-height:65px;font-size:20px}
+.speed-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.speed-grid .choice{min-height:65px;font-size:21px}
+.wide{grid-column:span 3}
+.boost{
+ background:#292d38;border:3px solid #777;
+ padding:18px;width:100%;color:white;
+ font-size:20px;font-weight:bold;margin-top:15px;
+}
+.stats{padding:22px 5px;font-size:19px}
+.stat{
+ display:flex;justify-content:space-between;
+ align-items:center;margin:25px 0;color:#bbb;
+}
+.stat strong{color:white;font-size:27px}
+.stat .orange{color:#ff974d}
+.world{
+ border-top:1px solid #444;padding:18px 0;
+ display:flex;justify-content:space-between;
+ align-items:center;font-size:18px;
+}
+.unlocked{color:#7bea80;font-weight:bold}
+button{cursor:pointer}
+@media(max-width:380px){
+ main{padding:8px}
+ .panel{padding:15px 10px}
+ .choice{font-size:14px}
+ h1{font-size:29px}
 }
 </style>
 </head>
 <body>
-<div class="container">
-  <h1>🏎️ Speed Calculator</h1>
-  <p>Hitung kecepatan perjalananmu</p>
+<header>
+ <div class="logo">G</div>
+ <div>☰</div>
+ <div>🥚</div>
+ <div>🔍</div>
+ <div style="background:#ff8c26;padding:12px">♙</div>
+</header>
 
-  <input id="distance" type="number"
-  placeholder="Jarak (KM)">
+<main>
+ <section class="hero">
+  <small>STEAL AN EGG</small>
+  <h1>Speed Calculator</h1>
+ </section>
 
-  <input id="time" type="number"
-  placeholder="Waktu (Jam)">
+ <div class="tabs">
+  <div class="tab">Calculator</div>
+  <div class="tab active">👟 Speed calculator</div>
+  <div class="tab">🥚 Egg</div>
+ </div>
 
-  <button onclick="calculate()">
-    HITUNG KECEPATAN
+ <section class="panel">
+  <h3>👟 YOUR SPEED NOW</h3>
+  <input id="currentSpeed" value="10K" placeholder="Enter your speed">
+
+  <h3>TREADMILL</h3>
+  <div class="grid" id="treadmills"></div>
+
+  <h3>TRAIL</h3>
+  <div class="trail-grid" id="trails"></div>
+
+  <h3>DOUBLE SPEED (ROBUX)</h3>
+  <div class="speed-grid" id="doubles"></div>
+
+  <button class="boost" id="timedBoost">
+   ⚡ x2 Speed boost (timed)
   </button>
 
-  <div id="result">0 KM/JAM</div>
-</div>
+  <div class="stats">
+   <div class="stat">
+    <span>Speed per second</span>
+    <strong class="orange">👟 <span id="perSecond">+2</span></strong>
+   </div>
+   <div class="stat">
+    <span>Per hour</span>
+    <strong id="perHour">+7.2K</strong>
+   </div>
+   <div class="stat">
+    <span>Boosts add up to</span>
+    <strong id="totalBoost">x1</strong>
+   </div>
+  </div>
+
+  <h3>WORLD PROGRESS</h3>
+  <div id="worlds"></div>
+ </section>
+</main>
 
 <script>
-function calculate() {
-  let d = Number(document.getElementById("distance").value);
-  let t = Number(document.getElementById("time").value);
+const treadmillData=[
+ ["Treadmill","2","🏃"],
+ ["Sci-Fi","5","🛸"],
+ ["Flame","12","🔥"],
+ ["Celebrity","30","⭐"],
+ ["Golden","80","🥇"],
+ ["The Freeze","100","❄️"],
+ ["Lucky Block","200","🎰"],
+ ["Hacker","500","💻"],
+ ["Demonic","1000","😈"],
+ ["Angelic","2000","👼"],
+ ["Astral","3000","✨"],
+ ["Guardian","8500","🛡️"]
+];
 
-  if (d <= 0 || t <= 0) {
-    document.getElementById("result").innerText =
-    "Masukkan angka yang benar!";
-    return;
+const trailData=[
+ ["No trail",1,"🟫"],
+ ["x1.5",1.5,"🩶"],
+ ["x2",2,"💚"],
+ ["x2.5",2.5,"🩵"],
+ ["x3",3,"💜"],
+ ["x3.5",3.5,"💛"],
+ ["x4",4,"❤️"],
+ ["x5",5,"💗"],
+ ["x7",7,"🦓"],
+ ["x10",10,"💖"],
+ ["x14",14,"🌈"],
+ ["x20",20,"💎"]
+];
+
+const doubleData=[1,2,4,8,16,32,64,128,256,512,1024,2048,4096];
+
+let treadmill=2,trail=1,doubleSpeed=1,timed=false;
+
+function makeButtons(id,data,type){
+ const box=document.getElementById(id);
+ data.forEach((item,index)=>{
+  const value=type==="treadmill"?Number(item[1]):
+   type==="trail"?item[1]:item;
+
+  const button=document.createElement("button");
+  button.className="choice";
+  if(type==="double")button.classList.add("speed-choice");
+  if(index===0)button.classList.add("selected");
+
+  if(type==="treadmill"){
+   button.innerHTML=`<span class="emoji">${item[2]}</span>${item[0]}<br>x${Number(item[1]).toLocaleString("en-US")}`;
+  }else if(type==="trail"){
+   button.innerHTML=`${item[2]} ${item[0]}`;
+  }else{
+   button.innerHTML=value===1?"None":value===2?"⚡ x2":`x${value.toLocaleString("en-US")}`;
   }
 
-  let speed = d / t;
+  button.onclick=()=>{
+   [...box.children].forEach(b=>b.classList.remove("selected"));
+   button.classList.add("selected");
 
-  document.getElementById("result").innerText =
-  speed.toFixed(2) + " KM/JAM";
+   if(type==="treadmill")treadmill=value;
+   if(type==="trail")trail=value;
+   if(type==="double")doubleSpeed=value;
+   calculate();
+  };
+  box.appendChild(button);
+ });
 }
+
+makeButtons("treadmills",treadmillData,"treadmill");
+makeButtons("trails",trailData,"trail");
+makeButtons("doubles",doubleData,"double");
+
+document.getElementById("doubles").firstChild.classList.add("selected");
+
+document.getElementById("timedBoost").onclick=function(){
+ timed=!timed;
+ this.classList.toggle("selected",timed);
+ this.style.borderColor=timed?"#ff923f":"#777";
+ this.style.background=timed?"#493020":"#292d38";
+ this.innerText=timed?"⚡ x2 Speed boost ACTIVE":"⚡ x2 Speed boost (timed)";
+ calculate();
+};
+
+function calculate(){
+ const boost=trail*doubleSpeed*(timed?2:1);
+ const speed=treadmill*boost;
+ document.getElementById("perSecond").innerText="+"+speed.toLocaleString("en-US");
+ document.getElementById("perHour").innerText="+"+(speed*3600).toLocaleString("en-US");
+ document.getElementById("totalBoost").innerText="x"+boost.toLocaleString("en-US");
+}
+
+const worldData=[
+ ["🌳","Forest",11],
+ ["🏜️","Desert",100],
+ ["🌋","Volcano",1000],
+ ["❄️","Snow",10000],
+ ["🌌","Space",100000]
+];
+
+function parseSpeed(value){
+ value=value.trim().toUpperCase().replace(/,/g,"");
+ const n=parseFloat(value);
+ if(!Number.isFinite(n))return 0;
+ if(value.endsWith("K"))return n*1000;
+ if(value.endsWith("M"))return n*1000000;
+ if(value.endsWith("B"))return n*1000000000;
+ return n;
+}
+
+function showWorlds(){
+ const speed=parseSpeed(document.getElementById("currentSpeed").value);
+ document.getElementById("worlds").innerHTML=worldData.map(w=>`
+ <div class="world">
+  <span>${w[0]}　<b>${w[1]}</b><br><small>${w[2].toLocaleString("en-US")} Speed</small></span>
+  <span class="${speed>=w[2]?'unlocked':''}">
+  ${speed>=w[2]?'Unlocked':'Locked'}</span>
+ </div>`).join("");
+}
+
+document.getElementById("currentSpeed").addEventListener("input",showWorlds);
+calculate();
+showWorlds();
 </script>
 </body>
 </html>
