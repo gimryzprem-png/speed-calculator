@@ -1,274 +1,131 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Steal an Egg - Speed Calculator</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#10051d">
+<title>Treadmill Calculator</title>
 <style>
+:root{--bg:#10051d;--panel:#170b25;--purple:#922cff;--purple2:#c58aff;--line:#7130a9;--muted:#c8b9d6}
 *{box-sizing:border-box}
-body{
- margin:0;background:#101114;color:white;
- font-family:Arial,sans-serif;
-}
-header{
- background:#211713;padding:18px;
- display:flex;justify-content:space-between;
- align-items:center;border-bottom:2px solid #444;
-}
-.logo{font-size:35px;font-weight:bold;color:#ff8b25}
-main{max-width:650px;margin:auto;padding:14px}
-.hero{
- padding:30px 20px;background:linear-gradient(135deg,#48204e,#171923);
- border:1px solid #333;border-radius:8px;
-}
-.hero small{color:#ff974d;letter-spacing:3px;font-weight:bold}
-h1{font-size:34px;margin:15px 0}
-.tabs{display:flex;gap:10px;margin:15px 0 25px}
-.tab{background:#24262d;padding:15px;border:2px solid #555;
- border-radius:6px;white-space:nowrap}
-.tab.active{background:#ff923f;color:#171717;border-color:#ffb16c}
-.panel{
- background-color:#17191d;
- background-image:linear-gradient(45deg,#24262a 12%,transparent 12%,transparent 88%,#24262a 88%);
- background-size:32px 32px;
- border:3px solid #292b30;
- padding:25px 16px;border-radius:8px;
-}
-h3{
- color:#ffb17c;letter-spacing:3px;
- font-size:17px;margin:18px 0;
-}
-input{
- width:100%;padding:20px;border:0;border-radius:7px;
- background:#090a0c;color:white;font-size:25px;
- outline:1px solid #292929;
-}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.choice{
- min-height:105px;background:#20232b;
- border:3px solid #555963;border-radius:4px;
- color:white;font-size:17px;font-weight:bold;
- padding:10px 3px;cursor:pointer;
- box-shadow:inset 3px 3px #777;
-}
-.choice .emoji{font-size:35px;display:block;margin-bottom:7px}
-.choice.selected{
- border:3px solid #ff8c32;
- background:#493020;
- box-shadow:inset 0 0 15px #7a411e;
-}
-.trail-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.trail-grid .choice{min-height:65px;font-size:20px}
-.speed-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.speed-grid .choice{min-height:65px;font-size:21px}
-.wide{grid-column:span 3}
-.boost{
- background:#292d38;border:3px solid #777;
- padding:18px;width:100%;color:white;
- font-size:20px;font-weight:bold;margin-top:15px;
-}
-.stats{padding:22px 5px;font-size:19px}
-.stat{
- display:flex;justify-content:space-between;
- align-items:center;margin:25px 0;color:#bbb;
-}
-.stat strong{color:white;font-size:27px}
-.stat .orange{color:#ff974d}
-.world{
- border-top:1px solid #444;padding:18px 0;
- display:flex;justify-content:space-between;
- align-items:center;font-size:18px;
-}
-.unlocked{color:#7bea80;font-weight:bold}
-button{cursor:pointer}
-@media(max-width:380px){
- main{padding:8px}
- .panel{padding:15px 10px}
- .choice{font-size:14px}
- h1{font-size:29px}
-}
+body{margin:0;min-height:100vh;padding:24px 14px 40px;background:radial-gradient(ellipse at 50% 0%,#351052 0,#160821 42%,#09040e 100%);color:#fff;font-family:Arial,Helvetica,sans-serif}
+.wrap{max-width:650px;margin:0 auto;border:1px solid var(--line);border-radius:30px;padding:22px 20px 26px;background:linear-gradient(145deg,rgba(35,15,52,.97),rgba(12,6,20,.98));box-shadow:0 0 28px #7b20bf35}
+.logo{width:190px;height:155px;margin:0 auto 28px;border-radius:22px;background:#030205;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 12px 35px #0008}
+.logo .symbol{font-size:65px;line-height:1;color:#a64cff;text-shadow:0 0 20px #922cff}
+.logo strong{font-size:22px;letter-spacing:3px;margin-top:8px}
+.logo small{font-size:10px;letter-spacing:5px;color:#d7b8ff;margin-top:4px}
+h1{text-align:center;font-size:clamp(27px,6vw,40px);margin:0;color:#d5a4ff;letter-spacing:.5px}
+.sub{text-align:center;color:var(--muted);font-size:16px;margin:12px 0 30px}
+label{display:block;font-weight:700;font-size:17px;margin:20px 0 10px}
+input,select{width:100%;height:58px;border:1px solid #7130a9;border-radius:17px;background:#0c0712;color:#fff;padding:0 17px;font-size:17px;outline:none}
+input:focus,select:focus{border-color:#c58aff;box-shadow:0 0 0 3px #922cff25}
+select{appearance:auto}
+.duration{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+button{width:100%;height:64px;border:0;border-radius:17px;margin-top:28px;background:linear-gradient(100deg,#8d2cff,#a02dff);color:white;font-size:18px;font-weight:800;letter-spacing:.4px;box-shadow:0 8px 22px #922cff40;cursor:pointer}
+button:active{transform:scale(.99)}
+.result{display:none;margin-top:22px;padding:23px 18px;border:1px solid #a13cff;border-radius:22px;background:linear-gradient(130deg,#1b0b2d,#0b0612);text-align:center;box-shadow:0 0 24px #922cff30}
+.result.show{display:block}
+.result h2{color:#c58aff;margin:0 0 12px;font-size:24px}
+.big{font-size:clamp(30px,8vw,46px);font-weight:900;overflow-wrap:anywhere}
+.details{margin-top:15px;color:#d6c8e2;line-height:1.7;font-size:14px}
+.note{margin:20px 4px 0;color:#aa9bb9;font-size:12px;line-height:1.55;text-align:center}
+@media(max-width:420px){.wrap{padding:18px 16px 22px}.logo{width:165px;height:140px}}
 </style>
 </head>
 <body>
-<header>
- <div class="logo">G</div>
- <div>☰</div>
- <div>🥚</div>
- <div>🔍</div>
- <div style="background:#ff8c26;padding:12px">♙</div>
-</header>
+<main class="wrap">
+  <div class="logo"><div class="symbol">♛</div><strong>TREADMILL</strong><small>CALCULATOR</small></div>
+  <h1>TREADMILL CALCULATOR</h1>
+  <p class="sub">Steal An Egg — AFK Speed Calculator</p>
 
-<main>
- <section class="hero">
-  <small>STEAL AN EGG</small>
-  <h1>Speed Calculator</h1>
- </section>
+  <label for="speed">⚡ Speed Awal (Custom)</label>
+  <input id="speed" inputmode="decimal" placeholder="Contoh: 28.7B" autocomplete="off">
 
- <div class="tabs">
-  <div class="tab">Calculator</div>
-  <div class="tab active">👟 Speed calculator</div>
-  <div class="tab">🥚 Egg</div>
- </div>
+  <label for="trail">🎗️ Trail</label>
+  <select id="trail">
+    <option value="1">No trail — x1</option>
+    <option value="1.5">Trail x1.5</option>
+    <option value="2">Trail x2</option>
+    <option value="2.5">Trail x2.5</option>
+    <option value="3">Trail x3</option>
+    <option value="3.5">Trail x3.5</option>
+  </select>
 
- <section class="panel">
-  <h3>👟 YOUR SPEED NOW</h3>
-  <input id="currentSpeed" value="10K" placeholder="Enter your speed">
+  <label for="multiplier">✖️ Multiplier</label>
+  <input id="multiplier" type="number" min="0" step="any" value="1" placeholder="Masukkan multiplier (contoh: 2)">
 
-  <h3>TREADMILL</h3>
-  <div class="grid" id="treadmills"></div>
+  <label for="treadmill">🏃 Treadmill</label>
+  <select id="treadmill">
+    <option value="1">Pilih Treadmill</option>
+    <option value="2">Treadmill x2</option>
+    <option value="5">Sci-Fi x5</option>
+    <option value="12">Flame x12</option>
+    <option value="30">Celebrity x30</option>
+    <option value="80">Golden x80</option>
+    <option value="100">The Freeze x100</option>
+    <option value="200">Lucky Block x200</option>
+    <option value="500">Hacker x500</option>
+    <option value="1000">Demonic x1,000</option>
+    <option value="2000">Angelic x2,000</option>
+    <option value="3000">Astral x3,000</option>
+    <option value="8500">Guardian x8,500</option>
+  </select>
 
-  <h3>TRAIL</h3>
-  <div class="trail-grid" id="trails"></div>
-
-  <h3>DOUBLE SPEED (ROBUX)</h3>
-  <div class="speed-grid" id="doubles"></div>
-
-  <button class="boost" id="timedBoost">
-   ⚡ x2 Speed boost (timed)
-  </button>
-
-  <div class="stats">
-   <div class="stat">
-    <span>Speed per second</span>
-    <strong class="orange">👟 <span id="perSecond">+2</span></strong>
-   </div>
-   <div class="stat">
-    <span>Per hour</span>
-    <strong id="perHour">+7.2K</strong>
-   </div>
-   <div class="stat">
-    <span>Boosts add up to</span>
-    <strong id="totalBoost">x1</strong>
-   </div>
+  <label>⏱️ Durasi (Custom)</label>
+  <div class="duration">
+    <input id="duration" type="number" min="0" step="any" value="1" placeholder="Durasi">
+    <select id="unit">
+      <option value="86400">Hari</option>
+      <option value="3600">Jam</option>
+      <option value="60">Menit</option>
+      <option value="1">Detik</option>
+    </select>
   </div>
 
-  <h3>WORLD PROGRESS</h3>
-  <div id="worlds"></div>
- </section>
+  <button id="calculate">⚡ HITUNG SPEED</button>
+
+  <section class="result" id="result" aria-live="polite">
+    <h2>🏁 Hasil Speed</h2>
+    <div class="big" id="finalSpeed">—</div>
+    <div class="details" id="breakdown"></div>
+  </section>
+  <p class="note">Catatan: perhitungan memakai rumus Speed Awal × Trail × Multiplier × Treadmill. Durasi digunakan untuk menghitung estimasi total berdasarkan hasil per detik. Sesuaikan multiplier dengan aturan game yang kamu gunakan.</p>
 </main>
-
 <script>
-const treadmillData=[
- ["Treadmill","2","🏃"],
- ["Sci-Fi","5","🛸"],
- ["Flame","12","🔥"],
- ["Celebrity","30","⭐"],
- ["Golden","80","🥇"],
- ["The Freeze","100","❄️"],
- ["Lucky Block","200","🎰"],
- ["Hacker","500","💻"],
- ["Demonic","1000","😈"],
- ["Angelic","2000","👼"],
- ["Astral","3000","✨"],
- ["Guardian","8500","🛡️"]
-];
-
-const trailData=[
- ["No trail",1,"🟫"],
- ["x1.5",1.5,"🩶"],
- ["x2",2,"💚"],
- ["x2.5",2.5,"🩵"],
- ["x3",3,"💜"],
- ["x3.5",3.5,"💛"],
- ["x4",4,"❤️"],
- ["x5",5,"💗"],
- ["x7",7,"🦓"],
- ["x10",10,"💖"],
- ["x14",14,"🌈"],
- ["x20",20,"💎"]
-];
-
-const doubleData=[1,2,4,8,16,32,64,128,256,512,1024,2048,4096];
-
-let treadmill=2,trail=1,doubleSpeed=1,timed=false;
-
-function makeButtons(id,data,type){
- const box=document.getElementById(id);
- data.forEach((item,index)=>{
-  const value=type==="treadmill"?Number(item[1]):
-   type==="trail"?item[1]:item;
-
-  const button=document.createElement("button");
-  button.className="choice";
-  if(type==="double")button.classList.add("speed-choice");
-  if(index===0)button.classList.add("selected");
-
-  if(type==="treadmill"){
-   button.innerHTML=`<span class="emoji">${item[2]}</span>${item[0]}<br>x${Number(item[1]).toLocaleString("en-US")}`;
-  }else if(type==="trail"){
-   button.innerHTML=`${item[2]} ${item[0]}`;
-  }else{
-   button.innerHTML=value===1?"None":value===2?"⚡ x2":`x${value.toLocaleString("en-US")}`;
+const suffixes={K:1e3,M:1e6,B:1e9,T:1e12, Qa:1e15,Qi:1e18};
+function parseSpeed(raw){
+  const s=String(raw).trim().replace(/,/g,'');
+  const match=s.match(/^([+-]?(?:\\d+\\.?\\d*|\\.\\d+))\\s*(K|M|B|T|Qa|Qi)?$/i);
+  if(!match) return NaN;
+  const suffix=match[2]||'';
+  const key=Object.keys(suffixes).find(k=>k.toLowerCase()===suffix.toLowerCase());
+  return Number(match[1])*(key?suffixes[key]:1);
+}
+function compact(n){
+  if(!Number.isFinite(n))return '—';
+  const units=[['Qi',1e18],['Qa',1e15],['T',1e12],['B',1e9],['M',1e6],['K',1e3]];
+  for(const [u,v] of units) if(Math.abs(n)>=v)return (n/v).toLocaleString('id-ID',{maximumFractionDigits:2})+u;
+  return n.toLocaleString('id-ID',{maximumFractionDigits:2});
+}
+document.getElementById('calculate').addEventListener('click',()=>{
+  const base=parseSpeed(document.getElementById('speed').value);
+  const trail=Number(document.getElementById('trail').value);
+  const multi=Number(document.getElementById('multiplier').value);
+  const treadmill=Number(document.getElementById('treadmill').value);
+  const duration=Number(document.getElementById('duration').value);
+  const seconds=duration*Number(document.getElementById('unit').value);
+  if(!(base>0)||!(multi>0)||!(treadmill>0)||!(duration>0)){
+    alert('Isi speed awal, multiplier, treadmill, dan durasi dengan angka yang valid. Contoh speed: 28.7B');return;
   }
-
-  button.onclick=()=>{
-   [...box.children].forEach(b=>b.classList.remove("selected"));
-   button.classList.add("selected");
-
-   if(type==="treadmill")treadmill=value;
-   if(type==="trail")trail=value;
-   if(type==="double")doubleSpeed=value;
-   calculate();
-  };
-  box.appendChild(button);
- });
-}
-
-makeButtons("treadmills",treadmillData,"treadmill");
-makeButtons("trails",trailData,"trail");
-makeButtons("doubles",doubleData,"double");
-
-document.getElementById("doubles").firstChild.classList.add("selected");
-
-document.getElementById("timedBoost").onclick=function(){
- timed=!timed;
- this.classList.toggle("selected",timed);
- this.style.borderColor=timed?"#ff923f":"#777";
- this.style.background=timed?"#493020":"#292d38";
- this.innerText=timed?"⚡ x2 Speed boost ACTIVE":"⚡ x2 Speed boost (timed)";
- calculate();
-};
-
-function calculate(){
- const boost=trail*doubleSpeed*(timed?2:1);
- const speed=treadmill*boost;
- document.getElementById("perSecond").innerText="+"+speed.toLocaleString("en-US");
- document.getElementById("perHour").innerText="+"+(speed*3600).toLocaleString("en-US");
- document.getElementById("totalBoost").innerText="x"+boost.toLocaleString("en-US");
-}
-
-const worldData=[
- ["🌳","Forest",11],
- ["🏜️","Desert",100],
- ["🌋","Volcano",1000],
- ["❄️","Snow",10000],
- ["🌌","Space",100000]
-];
-
-function parseSpeed(value){
- value=value.trim().toUpperCase().replace(/,/g,"");
- const n=parseFloat(value);
- if(!Number.isFinite(n))return 0;
- if(value.endsWith("K"))return n*1000;
- if(value.endsWith("M"))return n*1000000;
- if(value.endsWith("B"))return n*1000000000;
- return n;
-}
-
-function showWorlds(){
- const speed=parseSpeed(document.getElementById("currentSpeed").value);
- document.getElementById("worlds").innerHTML=worldData.map(w=>`
- <div class="world">
-  <span>${w[0]}　<b>${w[1]}</b><br><small>${w[2].toLocaleString("en-US")} Speed</small></span>
-  <span class="${speed>=w[2]?'unlocked':''}">
-  ${speed>=w[2]?'Unlocked':'Locked'}</span>
- </div>`).join("");
-}
-
-document.getElementById("currentSpeed").addEventListener("input",showWorlds);
-calculate();
-showWorlds();
+  const calculated=base*trail*multi*treadmill;
+  const total=calculated*seconds;
+  document.getElementById('finalSpeed').textContent=compact(calculated);
+  document.getElementById('breakdown').innerHTML=
+    'Speed hasil (per detik): <b>'+compact(calculated)+'</b><br>'+
+    'Estimasi akumulasi selama '+duration+' '+document.getElementById('unit').selectedOptions[0].text.toLowerCase()+': <b>'+compact(total)+'</b><br>'+
+    'Pengali total: <b>x'+(trail*multi*treadmill).toLocaleString('id-ID')+'</b>';
+  document.getElementById('result').classList.add('show');
+});
 </script>
 </body>
 </html>
