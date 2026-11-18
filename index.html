@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Speed Calculator</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #101827;
+  color: white;
+  text-align: center;
+  padding: 25px;
+}
+.container {
+  max-width: 400px;
+  margin: 50px auto;
+  background: #1e293b;
+  padding: 25px;
+  border-radius: 20px;
+}
+input {
+  width: 90%;
+  padding: 14px;
+  margin: 10px 0;
+  border: 0;
+  border-radius: 10px;
+  font-size: 17px;
+}
+button {
+  width: 100%;
+  padding: 15px;
+  background: #22c55e;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 18px;
+  margin-top: 15px;
+}
+#result {
+  font-size: 28px;
+  color: #22c55e;
+  margin-top: 25px;
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>🏎️ Speed Calculator</h1>
+  <p>Hitung kecepatan perjalananmu</p>
+
+  <input id="distance" type="number"
+  placeholder="Jarak (KM)">
+
+  <input id="time" type="number"
+  placeholder="Waktu (Jam)">
+
+  <button onclick="calculate()">
+    HITUNG KECEPATAN
+  </button>
+
+  <div id="result">0 KM/JAM</div>
+</div>
+
+<script>
+function calculate() {
+  let d = Number(document.getElementById("distance").value);
+  let t = Number(document.getElementById("time").value);
+
+  if (d <= 0 || t <= 0) {
+    document.getElementById("result").innerText =
+    "Masukkan angka yang benar!";
+    return;
+  }
+
+  let speed = d / t;
+
+  document.getElementById("result").innerText =
+  speed.toFixed(2) + " KM/JAM";
+}
+</script>
+</body>
+</html>
